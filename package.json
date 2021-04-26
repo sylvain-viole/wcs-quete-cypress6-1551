@@ -1,0 +1,22 @@
+{
+  "name": "wcs-quete-cypress6-1551",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylvain-viole/wcs-quete-cypress6-1551.git"
+  },
+  "author": "Sylvain Viole",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sylvain-viole/wcs-quete-cypress6-1551/issues"
+  },
+  "homepage": "https://github.com/sylvain-viole/wcs-quete-cypress6-1551#readme",
+  "devDependencies": {
+    "cypress": "^7.1.0"
+  }
+}
