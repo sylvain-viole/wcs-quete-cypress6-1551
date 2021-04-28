@@ -1,7 +1,8 @@
 {
-    "baseUrl": "",
-    "defaultCommandTimeout": 10000,
-    "pageLoadTimeout": 20000,
-    "watchForFileChanges": false,
-    "video": false
+  "baseUrl": "",
+  "defaultCommandTimeout": 10000,
+  "pageLoadTimeout": 20000,
+  "watchForFileChanges": false,
+  "video": false,
+  "projectId": "4zx8ni"
 }
