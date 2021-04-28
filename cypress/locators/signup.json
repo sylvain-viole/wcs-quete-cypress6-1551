@@ -1,0 +1,32 @@
+{
+    "createAccount": "#create-account",
+    "identifier": {
+        "email": "#IdentifiersLogin",
+        "emailRetype": "#IdentifiersLoginRetype",
+        "pwd": "#IdentifiersPassword",
+        "nextBtn": "#nextButton3"
+    },
+    "status": {
+        "company": "#StatusCompanies",
+        "particular": "#StatusParticular",
+        "nextBtn": "#nextButton4"
+    },
+    "place": {
+        "address": "#CompaniesAddress",
+        "zip": "#CompaniesPostCode",
+        "city": "#CompaniesCity",
+        "nextBtn": "#nextButton6"
+    },
+    "informations": {
+        "genderF": "#Salutation1",
+        "genderM": "#Salutation2",
+        "fn": "#InfoFirstname",
+        "ln": "#InfoLastname",
+        "mobile": "#InfoMobile",
+        "nextBtn": "#nextButton7"
+    },
+    "newsletter": {
+        "cgu": "#AcceptPrivacyPolicy",
+        "nextBtn": "#submit-create"
+    }
+}

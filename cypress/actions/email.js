@@ -1,3 +1,5 @@
+const parser = new DOMParser();
+
 function getMostRecentResetPwdEmail(user) {
     let mailId
     const url = `https://${user.email}/api/emails?sender=jpg@raja.fr`;
@@ -16,8 +18,50 @@ function getMostRecentResetPwdEmail(user) {
     })
 }
 
-function getHtmlBody(mail) {
-    cy.get(mail).its('body')
+
+function getHtmlBody() {
+    cy.get("@responseHtml").its("body").as("stringHtml");
 }
 
-export { getMostRecentResetPwdEmail, getHtmlBody };
+function parseHtml() {
+    cy.get("@stringHtml").then(string => {
+        const dom = parser.parseFromString(string, "text/html")
+        cy.wrap(dom).as('dom')
+    })
+}
+
+function getRestPwdLink() {
+    cy.get('@dom').then(dom => {
+        const link = dom.querySelector('[data-test-id="passwordResetLink"]').href;
+        cy.wrap(link).as('link')
+    });
+}
+
+function deleteEmailsFromUser(user) {
+    cy.request(`https://mailo.xyz/api/emails/?inbox=${user.email}`)
+        .its('body.data')
+        .then(data => {
+            data.forEach(mail => {
+                cy.request('DELETE', `https://mailo.xyz/api/emails/${mail.id}`)
+            })
+        })
+}
+
+function checkUserHasNoEmail(user) {
+    cy.request(`https://mailo.xyz/api/emails/?inbox=${user.email}`)
+        .its("body.data")
+        .then((data) => {
+            expect(data).to.be.an('array').and.have.lengthOf(0)
+        });
+}
+
+
+
+export {
+    getMostRecentResetPwdEmail,
+    getHtmlBody,
+    parseHtml,
+    getRestPwdLink,
+    deleteEmailsFromUser,
+    checkUserHasNoEmail
+};

@@ -1,0 +1,12 @@
+{
+    "userPwd": "#UserPassword",
+    "linkNewPwd": "#link-new-pwd",
+    "launchResetPwd": {
+        "pwdLogin": "#NewPwdLogin",
+        "sendPwd": "#sendpwdbutton"
+    },
+    "resetPwd": {
+        "newPwd": "[name=NewPassword_Password]",
+        "newPwdRetype": "[name=NewPassword_ConfirmPassword]"
+    }
+}

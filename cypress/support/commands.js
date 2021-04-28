@@ -23,18 +23,45 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add(
-    "checkExistsAndVisible",
-    (locators, visibleMode = true) => {
-        locators.forEach((locator) => {
-            cy.get(locator).should("exist");
-            if (visibleMode) {
-                cy.get(locator).should("be.visible");
-            }
-        });
-    }
-);
 
-Cypress.Commands.add("setInput", (locator, value) => {
-    cy.get(locator).type(value).should("have.value", value);
+
+Cypress.Commands.add('forceClick', (locator) => {
+    cy.get(locator).click({force: true})
+})
+
+Cypress.Commands.add("checkExists", (locator) => {
+    cy.get(locator).should("exist");
+});
+Cypress.Commands.add("checkIsVisible", (locator) => {
+    cy.get(locator).scrollIntoView().should("be.visible");
+});
+
+Cypress.Commands.add("isThere", (element, visibleMode = false) => {
+    if (typeof element === "string") {
+        cy.checkExists(element);
+        if (visibleMode) {
+            cy.checkIsVisible(element);
+        }
+    }
+    if (typeof element === "object") {
+        if (Array.isArray(element)) {
+            element.forEach((subElement) => {
+                cy.checkExists(subElement);
+                if (visibleMode) {
+                    cy.checkIsVisible(subElement);
+                }
+            });
+        } else {
+            for (const subElement in element) {
+                cy.checkExists(element[subElement]);
+                if (visibleMode) {
+                    cy.checkIsVisible(element[subElement]);
+                }
+            }
+        }
+    }
+});
+
+Cypress.Commands.add("setInput", (locator, value, forceStatus = false) => {
+    cy.get(locator).type(value, {force: forceStatus}).should("have.value", value);
 });

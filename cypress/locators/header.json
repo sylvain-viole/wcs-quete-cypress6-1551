@@ -1,0 +1,9 @@
+{
+    "login": 
+    {
+        "btnIsConnected": "#isConnected",
+        "dropdownAccount": "#dropdown-account",
+        "btnOpenConnect": "button#open-connect-btn"
+        
+    }
+}

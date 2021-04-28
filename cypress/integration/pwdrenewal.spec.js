@@ -1,23 +1,44 @@
-const Login = require('../actions/login')
-const Email = require('../actions/email')
-const user = require('../fixtures/user.json')
+const Login = require("../actions/login");
+const Connection = require("../actions/connection");
+const Signup = require("../actions/signup");
+const Email = require("../actions/email");
+const RestPwd = require("../actions/resetPwd");
+const { User } = require("../fixtures/User");
 
-describe('PWD renewal', () => {
+const user = new User("testUser")
 
-    before('should visit raja home page', () => {
-        cy.visit('/')
+describe("PWD renewal", () => {
+    before("should visit raja home page", () => {
+        cy.visit("/");
+    });
+
+    it("should go to log in page", () => {
+        Login.goToLoginPage();
+        Login.fillLogInForm(user);
+        cy.wait(1000);
+    });
+
+    it("should input already existing id", () => {
+        Login.checkPwdInputDisplay();
+        Login.forgotPwdLaunch(user);
+    });
+
+    it("should get Email and visit reset pwd link", () => {
+        Email.getMostRecentResetPwdEmail(user);
+        Email.getHtmlBody();
+        Email.parseHtml();
+        Email.getRestPwdLink();
+        cy.get("@link").then((link) => {
+            cy.visit(link);
+        });
+    });
+
+    it("should reset pwd", () => {
+        RestPwd.resetPwd(user);
+    });
+
+    after("delete emails", () => {
+        Email.deleteEmailsFromUser(user)
+        Email.checkUserHasNoEmail(user)
     })
-
-    it('should input already existing id', () => {
-        Login.goToLoginPage()
-        Login.fillLogInForm(user)
-        Login.checkPwdInputDisplay()
-        Login.forgotPwdLaunch(user)
-    })
-
-    it('should get Email', () => {
-        Email.getMostRecentResetPwdEmail(user)
-        Email.getHtmlBody('@responseHtml')
-    })
-
-})
+});

@@ -1,21 +1,26 @@
+const Api = require("../actions/api");
+const header = require("../locators/header.json");
+const identify = require("../locators/identify.json");
+const login = require("../locators/login.json");
+
 function goToLoginPage() {
-    cy.checkExistsAndVisible(["#dropdown-account"]);
-    cy.get("#dropdown-account")
+    cy.isThere(header.login.dropdownAccount);
+    cy.get(header.login.dropdownAccount)
         .click()
         .then(() => {
-            cy.checkExistsAndVisible(["button#open-connect-btn"]);
-            cy.get("button#open-connect-btn").click();
+            cy.isThere(header.login.btnOpenConnect);
+            cy.get(header.login.btnOpenConnect).click();
         });
 }
 
 function fillLogInForm(user) {
-    cy.checkExistsAndVisible(["#UserLogin", "#next-pwd"], false);
-    cy.setInput("#UserLogin", user.email);
-    cy.get("#next-pwd").click();
+    cy.isThere(identify, false);
+    cy.setInput(identify.userLogin, user.email);
+    cy.get(identify.nextPwd).click();
 }
 
 function checkPwdInputDisplay() {
-    cy.checkExistsAndVisible(["#UserPassword", "#link-new-pwd"]);
+    cy.isThere([login.userPwd, login.linkNewPwd]);
 }
 
 function forgotPwdLaunch(user) {
@@ -23,13 +28,14 @@ function forgotPwdLaunch(user) {
         "POST",
         "INTERSHOP/web/WFS/RAJA-JPG-Site/fr_FR/-/EUR/ViewForgotLoginData-SendPassword",
         (req) => {
-            expect(req.body).to.include("svioletest%40mailo.xyz");
+            expect(req.body).to.include(encodeURIComponent(user.email));
         }
     );
-    cy.get("#link-new-pwd").click();
-    cy.checkExistsAndVisible(["#NewPwdLogin", "#sendpwdbutton"]);
-    cy.get("#NewPwdLogin").should("have.value", user.email);
-    cy.get("#sendpwdbutton").click();
+    cy.get(login.linkNewPwd).click();
+    const target = login.launchResetPwd
+    cy.isThere(target);
+    cy.get(target.pwdLogin).should("have.value", user.email);
+    cy.get(target.sendPwd).click();
 }
 
 export { goToLoginPage, fillLogInForm, checkPwdInputDisplay, forgotPwdLaunch };
