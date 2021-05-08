@@ -1,5 +1,4 @@
 {
-  "baseUrl":"https://stg-jpg.rajapack.xyz/",
   "defaultCommandTimeout": 10000,
   "pageLoadTimeout": 20000,
   "watchForFileChanges": false,
