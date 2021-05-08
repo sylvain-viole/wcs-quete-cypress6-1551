@@ -6,7 +6,7 @@ This repo hosts an automated test suite challenging raja's website on Password R
 
 It uses DDT, App Actions and external locators.
 
-Public dashboard here : 
+Public dashboard here  : 
 
 https://dashboard.cypress.io/projects/4zx8ni/
 
